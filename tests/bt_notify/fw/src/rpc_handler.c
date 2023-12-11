@@ -216,4 +216,6 @@ void register_handlers(void)
 	cmd_handlers[RPC_CMD_BT_CONNECT] = handler_connect;
 	cmd_handlers[RPC_CMD_BT_DISCONNECT] = handler_disconnect;
 	cmd_handlers[RPC_CMD_K_OOPS] = handler_k_oops;
+
+	nih_rpc_register_cmd_handlers(cmd_handlers, RPC_CMD_MAX);
 }

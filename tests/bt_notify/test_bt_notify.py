@@ -8,7 +8,6 @@ import sys
 import time
 import enum
 import logging
-from targettest.cbor import CBORPayload
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,6 +20,14 @@ class RPCEvents(enum.IntEnum):
 
     # Commands (still sent in EVT format)
     BT_ADVERTISE = enum.auto()
+    BT_SCAN = enum.auto()
+    BT_SCAN_STOP = enum.auto()
+    BT_CONNECT = enum.auto()
+    BT_DISCONNECT = enum.auto()
+    K_OOPS = enum.auto()
+
+class RPCCmds(enum.IntEnum):
+    BT_ADVERTISE = 0x01
     BT_SCAN = enum.auto()
     BT_SCAN_STOP = enum.auto()
     BT_CONNECT = enum.auto()
@@ -66,7 +73,7 @@ class TestBluetooth():
         # Trigger a kernel panic
         with pytest.raises(Exception):
             # Will raise a comm failure because the device will be unresponsive
-            testdevices['dut'].rpc.evt(RPCEvents.K_OOPS)
+            testdevices['dut'].rpc.cmd(RPCCmds.K_OOPS)
 
     def test_scan(self, advertiser, scanner):
         LOGGER.info("Scan test")

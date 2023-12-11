@@ -8,13 +8,15 @@
 #include <zephyr/bluetooth/bluetooth.h>
 
 void evt_ready(void);
-
+extern void register_handlers(void);
 int main(void)
 {
 	printk("RPC testing app started [APP Core].\n");
 
 	bt_enable(NULL);
 	printk("bt enabled\n");
+
+	register_handlers();
 
 	/* Signal to python testcase that we are ready to accept commands. */
 	evt_ready();
